@@ -1,0 +1,26 @@
+{
+  "name": "node-tcp-server",
+  "version": "0.1.0",
+  "description": "Simple TCP server for Node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/debjitbis08/node-tcp-server.git"
+  },
+  "keywords": [
+    "TCP",
+    "NodeJS"
+  ],
+  "author": "debjit.biswas@fastmail.fm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/debjitbis08/node-tcp-server/issues"
+  },
+  "dependencies": {
+    "mysql": "~2.6.2",
+    "nconf": "~0.7.1"
+  }
+}
