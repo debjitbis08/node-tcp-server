@@ -13,10 +13,10 @@ nconf.argv()
 var PORT = nconf.get('port');
 
 var connection = mysql.createConnection({
-    host     : nconf.get('db_host'),
-    user     : nconf.get('db_user'),
-    password : nconf.get('db_password'),
-    database : nconf.get('db_name')
+    host     : nconf.get('DB_HOST'),
+    user     : nconf.get('DB_USER'),
+    password : nconf.get('DB_PASSWORD'),
+    database : nconf.get('DB_NAME')
 });
 
 var server = net.createServer(function(socket) {
