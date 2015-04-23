@@ -80,19 +80,22 @@ function decode(data) {
     var values = matched[1];
     var position = 0;
     var buf = populateBuffer(values);
+    var _buf = new Buffer(4);
 
     return DECODER_CONFIG.fields.reduce(function(acc, field, i) {
-        var value = field.size === 32 ? buf.readUInt32BE(position) :
-                field.size === 16 ? buf.readUInt16BE(position) :
-                field.size === 8 ? buf.readUInt8(position) : null;
-
-        position += (field.size/8);
 
         if (field.flipped && field.size === 32) {
-            acc[field.name] = convertToFloat(convertToDWord(value));
+            _buf[0] = buf[position + 2];
+            _buf[1] = buf[position + 3];
+            _buf[2] = buf[position];
+            _buf[3] = buf[position + 1];
+            acc[field.name] = _buf.readFloatBE(0);
         } else {
-            acc[field.name] = value;
+            acc[field.name] = field.size === 16 ? buf.readUInt16BE(position) :
+                field.size === 8 ? buf.readUInt8(position) : null;
         }
+
+        position += (field.size/8);
 
         return acc;
     }, {});
