@@ -1,10 +1,11 @@
 'use strict';
 
-var http = require('http');
 var mysql = require('mysql');
 var net = require('net');
 
 var nconf = require('nconf');
+
+var decode = require('./decoder');
 
 nconf.argv()
      .env()
@@ -23,9 +24,11 @@ var server = net.createServer(function(socket) {
 
     socket.on('data', function(data) {
         var response = data.toString().trim();
+
+        var decoded = decode(response);
         
-        console.log(response);
-        saveToDB(data, function (id) {
+        console.log(decoded);
+        saveToDB(response, function (id) {
             console.log('Saved ' + response + ' successfully, with id ' + id);
         }, function (err) {
             console.log('ERR: Failed to save data ' + response);
@@ -36,29 +39,6 @@ var server = net.createServer(function(socket) {
     socket.on('end', function() {
         console.log('client disconnected');
     });
-
-    /*
-    if (request.method === 'POST') {
-        var body = '';
-        request.on('data', function (data) {
-            body += data;
-            // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-            if (body.length > 1e6) {
-                request.connection.destroy();
-            }
-        });
-        request.on('end', function () {
-            saveToDB(body, function (id) {
-                sendRow(id, response);
-            }, function (err) {
-                response.writeHead(400);
-                response.end('Failed to save data');
-            });
-        });
-    } else {
-        sendList(response);
-    }
-    */
 });
 
 function sendList(response) {

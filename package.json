@@ -22,5 +22,8 @@
   "dependencies": {
     "mysql": "~2.6.2",
     "nconf": "~0.7.1"
+  },
+  "devDependencies": {
+    "jscs": "~1.12.0"
   }
 }
